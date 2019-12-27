@@ -6,10 +6,24 @@ dotenv.config();
 
 app.use(cors())
 
+app.get("/", (req, res) => {
+    paymentModule.getBalance()
+        .then(balance => {
+            console.log(balance)
+            res.send({
+                name: process.env.NAME,
+                message: 'hello world!', 
+                balance: balance
+            });
+        })
+        .catch(err => {
+        console.log(err)
+        })
+});
+
 var options = {
-    mount: '/payments',
-    value: 1000,
-    websockets: true
+    websockets: true,
+    api: true
     // ...
 }
 

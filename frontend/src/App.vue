@@ -1,12 +1,22 @@
 <template>
   <div id="app">
-    <h1 class="title">AKITA Robot</h1>
-    <h2 class="sub-title">IOTA Machine Wallet</h2>
-    <div v-if="!payed">
-      <iota-payment class="pay-button" @paymentSuccess="paymentSuccess">Show QR Code</iota-payment>
+    <div class="left">
+      <h3>Machine Type</h3>
+      <h1 class="title">{{name}}</h1>
+      <h3>Wallet Balance</h3>
+      <h1 class="title">{{balance}}</h1>
+      <h3>Action</h3>
+      <h1 class="title">{{action}}</h1>
+      <h3>Last Transaction</h3>
+      <h1 class="title">{{last_tx}}</h1>
     </div>
-    <div v-else>
-        <img class="robot" src="./assets/Robot002.gif" />
+    <div class="right">
+      <div v-if="!payed" @click="order_product">
+        <iota-payment class="pay-button" @paymentSuccess="paymentSuccess">Order Product</iota-payment>
+      </div>
+      <div v-else>
+          <img class="robot" src="./assets/Robot002.gif" />
+      </div>
     </div>
   </div>
 </template>
@@ -20,18 +30,39 @@ export default {
   },
   data() {
     return {
-      payed: false
+      payed: false,
+      name: 'Loading',
+      balance: 'Loading',
+      action: 'Loading',
+      last_tx: 'Loading'
     }
   },
+  created() {
+    this.getInfo()
+  },
   methods: {
-    paymentSuccess() {
+    paymentSuccess(payment) {
       this.payed = true;
-
+      console.log(payment)
       setTimeout(function() {
         // click on button
         location.reload();
       }, 10000);
       
+    },
+    getInfo() {
+      this.$http.get('http://localhost:5000')
+      .then((result) => {
+        console.log("result", result)
+        this.name = result.data.name
+        this.balance = result.data.balance
+        this.action = 'Waiting for Work'
+        this.last_tx = 'None'
+      })
+    },
+    order_product() {
+        console.log("logogogo")
+       this.action = 'Waiting for Pay'
     }
   }
 }
@@ -47,10 +78,7 @@ export default {
 }
 body {
   height: 100vh;
-  widows: 100%;
-  text-align: center;
-  justify-content: center;
-    background: linear-gradient(
+  background: linear-gradient(
     to bottom right,
     var(--akita-primary) 50%,
     var(--akita-secondary) 85%
@@ -62,22 +90,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--akita-light);
   margin: 0 auto;
-  margin-top: 60px;
 
   border-radius: 10px;
-  padding: 20px 20px;
-  max-width: 600px;
+  width: 100%;
 }
 .title {
-  font-size: 4em;
+  font-size: 3.5em;
   font-weight: bold;
+  margin-top: 0
 }
 .sub-title {
   font-size: 3em;
   font-weight: bold;
 }
+
+h3 {
+    margin-bottom: 0
+}
 .logo {
   width: 200px;
+}
+
+.left {
+  margin-left: 50px;
+  float: left;
+  margin-top: 50px;
+}
+.right {
+  margin-top: 100px;
+  text-align: center;
+  width: 50%;
+  float: right;
 }
 
 .pay-button button {
@@ -91,6 +134,9 @@ body {
   display: inline-block;
   font-size: 18px;
 }
+.pay-button a {
+    display: none;
+  }
 .pay-button button:hover {
   cursor: pointer;
 }

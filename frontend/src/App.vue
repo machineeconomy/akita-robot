@@ -7,8 +7,6 @@
       <h1 class="title">{{balance}}</h1>
       <h3>Action</h3>
       <h1 class="title">{{action}}</h1>
-      <h3>Last Transaction</h3>
-      <h1 class="title">{{last_tx}}</h1>
     </div>
     <div class="right">
       <div v-if="!payed" @click="order_product">

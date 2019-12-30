@@ -51,7 +51,7 @@ export default {
       
     },
     getInfo() {
-      this.$http.get('http://localhost:5000')
+      this.$http.get('http://localhost:5000/info')
       .then((result) => {
         console.log("result", result)
         this.name = result.data.name

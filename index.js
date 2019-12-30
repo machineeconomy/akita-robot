@@ -1,12 +1,15 @@
 var paymentModule = require('iota-payment')
 var app = require('express')()
 var cors = require('cors')
+const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 
 app.use(cors())
 
-app.get("/", (req, res) => {
+app.use('/', express.static('frontend/dist'));
+
+app.get("/info", (req, res) => {
     paymentModule.getBalance()
         .then(balance => {
             console.log(balance)

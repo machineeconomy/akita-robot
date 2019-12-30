@@ -50,7 +50,7 @@ cat /dev/urandom |tr -dc A-Z9|head -c${1:-81}
 cat /dev/urandom |LC_ALL=C tr -dc 'A-Z9' | fold -w 81 | head -n 1
 ```
 
-### Windows
+#### Windows
 For Windows, the best way is to use [KeePass](https://keepass.info/), or use one of the two online generators above.
 
 You will want to use the password generator with the following settings:

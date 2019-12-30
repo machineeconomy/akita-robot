@@ -43,9 +43,7 @@ var onPaymentSuccess = function (payment) {
     console.log("PROVIDER_URL", process.env.PROVIDER_URL)
 
     var url = process.env.PROVIDER_URL;
-    var headers = {
-        "Content-Type": "application/json"
-    }
+
     var data = {
         "name": "akita_lego_robot",
         "description": "Pay for energy"
@@ -63,7 +61,7 @@ var onPaymentSuccess = function (payment) {
                 value: open_payment.value, 
                 //optional
                 message: 'Pay for energy',
-                tag: 'TRYTETAG'
+                tag: 'AKITAROBOT'
             }
             paymentModule.payout.send(payoutObject)
             .then(result => {

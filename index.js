@@ -1,5 +1,6 @@
 var paymentModule = require('iota-payment')
-var app = require('express')()
+var express = require('express')
+var app = express()
 var cors = require('cors')
 const fs = require('fs');
 const dotenv = require('dotenv');

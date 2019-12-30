@@ -80,5 +80,6 @@ cd ..
 
 enter this lines in your terminal.
 ```bash
+npm install
 npm start
 ```
